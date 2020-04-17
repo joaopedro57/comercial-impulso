@@ -15,6 +15,7 @@ class Api_controller extends CI_Controller {
 
 	public function cadastrar_lead_post()
 	{
+
 		$dados = array(
 			'firstName' => "Lucas",
 			'name' => "Lucas Doido",
@@ -26,7 +27,6 @@ class Api_controller extends CI_Controller {
 				'lastUsage' => "2019-05-16T20:00:00Z")));
 
 		$meetime = json_encode($dados);
-		print_r($meetime);exit;
 		$enviar = meetime_lead($meetime);
 
 		print_r($enviar);exit;
