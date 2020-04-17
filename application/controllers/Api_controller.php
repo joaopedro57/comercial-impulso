@@ -1,7 +1,13 @@
 <?php
-/*header("Access-Control-Allow-Origin: *");
-header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
-header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");*/
+ /* CORS Joy!!! */
+  header('Access-Control-Allow-Origin: *');
+  header('Access-Control-Allow-Headers: Content-Length');
+  header('Access-Control-Expose-Headers: Content-Length');
+  header('Timing-Allow-Origin: *');
+
+  /* anything.. really... */
+  header('Content-Type: text/json;');
+  header('X-Powered-By: peanut-butter');
 
 defined('BASEPATH') OR exit('No direct script access allowed');
 

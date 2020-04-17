@@ -4,7 +4,7 @@ api_version: 1
 handlers:
 - url: /assets
   static_dir: assets
-  
+
 - url: /(.*\.(pdf|png|jpg))$
   static_files: \1
   upload: .+\.(pdf|png|jpg)$
@@ -12,5 +12,3 @@ handlers:
 
 - url: /.*
   script: index.php
-  http_headers:
-    Access-Control-Allow-Origin: https://deploy-preview-23--impulso-work.netlify.app/team-incentivo
