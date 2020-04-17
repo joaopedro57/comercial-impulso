@@ -36,7 +36,6 @@ class Api_controller extends REST_Controller {
 				'phone' => "+55".$phone,
 				'lastUsage' => "2019-05-16T20:00:00Z")));
 
-		print_r($array);exit;
 		$meetime = json_encode($dados);
  		$enviar = meetime_lead($meetime);
 
