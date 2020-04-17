@@ -17,3 +17,7 @@ function meetime_lead( $data ){
 
 	return json_decode( $output, true );
 }
+
+function soNumero($str) {
+    return preg_replace("/[^0-9]/", "", $str);
+}

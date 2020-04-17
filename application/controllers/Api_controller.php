@@ -23,20 +23,22 @@ class Api_controller extends REST_Controller {
 	public function cadastrar_lead_post()
 	{
 		$dados = $this->post();
-		print_r($dados);exit;
+		$firstName = explode(" ", $dados['dataForm']['2']['value']);
+		$phone = soNumero($dados['dataForm']['4']['value']);
 
-		$dados = array(
-			'firstName' => "Lucas",
-			'name' => "Lucas Doido",
-			'email' => "lucas@impulso.work",
-			'company' => "Impulso",
+		$array = array(
+			'firstName' => $firstName['0'],
+			'name' => $dados['dataForm']['2']['value'],
+			'email' => $dados['dataForm']['5']['value'],
+			'company' => $dados['dataForm']['3']['value'],
 			'phones' => array( array(
 				'label' => "Escritório",
-				'phone' => "+5531992280009",
+				'phone' => "+55".$phone,
 				'lastUsage' => "2019-05-16T20:00:00Z")));
 
+		print_r($array);exit;
 		$meetime = json_encode($dados);
-		$enviar = meetime_lead($meetime);
+ 		$enviar = meetime_lead($meetime);
 
 		print_r($enviar);exit;
 	}
