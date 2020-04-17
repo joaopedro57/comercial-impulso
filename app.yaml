@@ -13,4 +13,4 @@ handlers:
 - url: /.*
   script: index.php
   http_headers:
-    Access-Control-Allow-Origin: *
+    Access-Control-Allow-Origin: https://deploy-preview-23--impulso-work.netlify.app/team-incentivo
