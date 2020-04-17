@@ -39,6 +39,6 @@ class Api_controller extends REST_Controller {
 		$meetime = json_encode($array);
  		$enviar = meetime_lead($meetime);
 
-		print_r($enviar);exit;
+		return $enviar;
 	}
 }
