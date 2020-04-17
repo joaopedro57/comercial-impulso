@@ -2,10 +2,13 @@ runtime: php55
 api_version: 1
 
 handlers:
-# Serve images as static resources.
-  http_headers:
-    Access-Control-Allow-Origin: *
+- url: /assets
+  static_dir: assets
 
-# Serve php scripts.
+- url: /(.*\.(pdf|png|jpg))$
+  static_files: \1
+  upload: .+\.(pdf|png|jpg)$
+  application_readable: true
+
 - url: /.*
   script: index.php
