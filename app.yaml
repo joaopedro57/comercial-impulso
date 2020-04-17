@@ -4,7 +4,7 @@ api_version: 1
 handlers:
 - url: /assets
   static_dir: assets
-
+  
 - url: /(.*\.(pdf|png|jpg))$
   static_files: \1
   upload: .+\.(pdf|png|jpg)$
