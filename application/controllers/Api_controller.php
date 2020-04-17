@@ -15,17 +15,18 @@ class Api_controller extends CI_Controller {
 
 	public function cadastrar_lead_post()
 	{
-
+		$dados = $this->input->post();
+		print_r($dados);
 		$dados = array(
-			'firstName' => "Lucas",
-			'name' => "Lucas Doido",
-			'email' => "lucas@impulso.work",
-			'company' => "Impulso",
+			'firstName' => $dados['firstame'],
+			'name' => $dados['firstame'],
+			'email' => $dados['email'],
+			'company' => $dados['company'],
 			'phones' => array( array(
 				'label' => "Escritório",
-				'phone' => "+5531992280009",
+				'phone' => "+55".$dados['phone'],
 				'lastUsage' => "2019-05-16T20:00:00Z")));
-
+		print_r($dados);exit;
 		$meetime = json_encode($dados);
 		$enviar = meetime_lead($meetime);
 
