@@ -12,3 +12,5 @@ handlers:
 
 - url: /.*
   script: index.php
+  http_headers:
+    Access-Control-Allow-Origin: *
