@@ -17,12 +17,14 @@ class Api_controller extends REST_Controller {
 	{
           parent::__construct();
           $this->load->helper('meetime_api');
+          $this->load->model('Meetime_models');
     }
 
 
 	public function cadastrar_lead_post()
 	{
 		$dados = $this->post();
+
 		$firstName = explode(" ", $dados['dataForm']['2']['value']);
 		$phone = soNumero($dados['dataForm']['4']['value']);
 
@@ -36,8 +38,26 @@ class Api_controller extends REST_Controller {
 				'phone' => "+55".$phone,
 				'lastUsage' => "2019-05-16T20:00:00Z")));
 
+		/*$array = array(
+			'firstName' => $dados['firstName'],
+			'name' => $dados['name'],
+			'email' => $dados['email'],
+			'company' => $dados['company'],
+			'phones' => array( array(
+				'label' => "Escritório",
+				'phone' => $dados['phones']['0']['phone'],
+				'lastUsage' => "2019-05-16T20:00:00Z"))); */
+
 		$meetime = json_encode($array);
  		$enviar = meetime_lead($meetime);
+ 		$salvar = array(
+ 			'nome' => $array['name'],
+ 			'email' => $array['email'],
+ 			'empresa' => $array['company'],
+ 			'telefone' => $array['phones'][0]['phone'],
+ 			'id_meetime' => $enviar['id']);
+
+ 		$this->Meetime_models->salvar_lead($salvar);
 
 		return $enviar;
 	}
