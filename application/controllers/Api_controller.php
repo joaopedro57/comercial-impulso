@@ -61,4 +61,35 @@ class Api_controller extends REST_Controller {
 
 		return $enviar;
 	}
+
+	public function pipedrive()
+	{
+		$dados = $this->post();
+		$phone = soNumero($dados['dataForm']['4']['value']);
+
+		$person = array(
+			'name' => $dados['dataForm']['2']['value'],
+			'email' => $dados['dataForm']['5']['value'],
+			'owner_id' => 11375206
+			'phone' => $phone);
+
+		$criar_pessoa = pipedrive_person(json_encode($person));
+
+		$org = array(
+			'name' => $dados['dataForm']['3']['value'],
+			'owner_id' => 11375206);
+
+		$criar_org = pipedrive_org(json_encode($org));
+
+		$deal = array(
+			'title' => 'Inbound - '.$dados['dataForm']['3']['value'],
+			'user_id' => 11375206,
+			'person_id' => $criar_pessoa['data']['id'],
+			'org_id' => $criar_org['data']['id'],
+			'stage_id' => 1);
+
+		$criar_deal = pipedrive_deal(json_encode($deal));
+
+		return $criar_deal;
+	}
 }
