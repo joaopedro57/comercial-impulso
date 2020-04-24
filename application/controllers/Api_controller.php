@@ -62,15 +62,16 @@ class Api_controller extends REST_Controller {
 		return $enviar;
 	}
 
-	public function pipedrive()
+	public function pipedrive_post()
 	{
 		$dados = $this->post();
+
 		$phone = soNumero($dados['dataForm']['4']['value']);
 
 		$person = array(
 			'name' => $dados['dataForm']['2']['value'],
 			'email' => $dados['dataForm']['5']['value'],
-			'owner_id' => 11375206
+			'owner_id' => 11375206,
 			'phone' => $phone);
 
 		$criar_pessoa = pipedrive_person(json_encode($person));
