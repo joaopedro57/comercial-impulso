@@ -93,4 +93,32 @@ class Api_controller extends REST_Controller {
 
 		return $criar_deal;
 	}
+
+	public function pipedrive_agile_post()
+	{
+		$dados = $this->post();
+
+		$person = array(
+			'name' => $dados['dataForm']['2']['value'],
+			'email' => $dados['dataForm']['3']['value'],
+			'owner_id' => 11375206);
+
+		$criar_pessoa = pipedrive_person(json_encode($person));
+
+		$deal = array(
+			'title' => 'Pagina Agile - '.$dados['dataForm']['2']['value'],
+			'user_id' => 11375206,
+			'person_id' => $criar_pessoa['data']['id'],
+			'stage_id' => 1);
+
+		$criar_deal = pipedrive_deal(json_encode($deal));
+
+		$nota = array(
+			'content' => $dados['dataForm']['4']['value'],
+			'deal_id' => $criar_deal['data']['id']);
+
+		$criar_nota = pipedrive_note(json_encode($nota));
+
+		return $criar_deal;
+	}
 }

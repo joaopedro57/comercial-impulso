@@ -75,3 +75,21 @@ function pipedrive_deal( $data ){
 
 	return json_decode( $output, true );
 }
+
+function pipedrive_note( $data ){
+	$url = "https://api.pipedrive.com/v1/notes?api_token=30b28f0f7c3a1c8d22c75bd60774c9428b8371f6";
+
+	$ch = curl_init();
+	curl_setopt( $ch, CURLOPT_URL, $url );
+	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+
+	curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json') );
+	curl_setopt( $ch, CURLOPT_CUSTOMREQUEST, 'POST' );
+	curl_setopt( $ch, CURLOPT_POSTFIELDS, $data );
+
+	$output = curl_exec( $ch );
+	$info = curl_getinfo( $ch );
+	curl_close( $ch );
+
+	return json_decode( $output, true );
+}
