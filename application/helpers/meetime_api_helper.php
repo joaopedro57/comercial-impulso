@@ -1,7 +1,7 @@
 <?php if ( ! defined('BASEPATH')) exit('No direct script access allowed');
 
 function meetime_lead( $data ){
-	$url = "https://api.meetime.com.br/v1/flow/cadences/6489/leads?token=PLsN__Bij73TNqPHiZnHTPRCx6mweY3-UYIHiBMTZ8E";
+	$url = "https://api.meetime.com.br/v2/prospections/cadence/6989/lead?token=bKizSuBFGSpWqlubkLs-hQ6RYziRmNJb1wJm0dBkDmo";
 
 	$ch = curl_init();
 	curl_setopt( $ch, CURLOPT_URL, $url );
