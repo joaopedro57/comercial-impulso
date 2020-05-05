@@ -69,7 +69,7 @@ class Api_controller extends REST_Controller {
 
 			$mensagem = array(
 				'channel' => "#hub-comercial",
-				'text' => "@canl Novo Lead da Pagina Team - Inceitvo. ID do meetime: ".$enviar['id'],
+				'text' => "@comercial  Novo Lead da Pagina Team - Inceitvo. ID do meetime: ".$enviar['id'],
 				'as_user' => "true");
 
 			$notas = slack_mensagem($mensagem);
