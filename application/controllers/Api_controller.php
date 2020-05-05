@@ -63,7 +63,8 @@ class Api_controller extends REST_Controller {
 	 		$mensagem = array(
 				'channel' => "#hub-marketing",
 				'text' => "Novo Lead da Pagina Team - Inceitvo. \n Nome : ".$salvar['nome']."\n Empresa : ".$salvar['empresa'],
-				'as_user' => "true");
+				'as_user' => "false",
+				'username' => "API Comercial");
 
 			$notas = slack_mensagem($mensagem);
 
@@ -108,7 +109,9 @@ class Api_controller extends REST_Controller {
 			$mensagem = array(
 				'channel' => "#impulso-agile",
 				'text' => "@mira @celso @Emiliano Novo Lead da Pagina ".$dados['dataForm']['0']['value']."  \n Nome : ".$person['name']."\n Empresa : ".$org['name'],
-				'as_user' => "true");
+				'as_user' => "false",
+				'link_names' => "true",
+				'username' => "API Comercial");
 
 			$notas = slack_mensagem($mensagem);
 
