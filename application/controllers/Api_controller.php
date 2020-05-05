@@ -24,51 +24,94 @@ class Api_controller extends REST_Controller {
 	public function cadastrar_lead_post()
 	{
 		$dados = $this->post();
-		$ex = array(
-			'ex' => json_encode($dados));
 
-		$this->Meetime_models->exemplo($ex);
-		$firstName = explode(" ", $dados['dataForm']['2']['value']);
-		$phone = soNumero($dados['dataForm']['4']['value']);
+		if ($dados['dataForm']['0']['value'] == 'team-incentivo') {
 
-		$array = array(
-			'firstName' => $firstName['0'],
-			'name' => $dados['dataForm']['2']['value'],
-			'email' => $dados['dataForm']['5']['value'],
-			'company' => $dados['dataForm']['3']['value'],
-			'phones' => array( array(
-				'label' => "Escritório",
-				'phone' => "+55".$phone,
-				'lastUsage' => "2019-05-16T20:00:00Z")));
+			$firstName = explode(" ", $dados['dataForm']['2']['value']);
+			$phone = soNumero($dados['dataForm']['4']['value']);
 
-		/*$array = array(
-			'firstName' => $dados['firstName'],
-			'name' => $dados['name'],
-			'email' => $dados['email'],
-			'company' => $dados['company'],
-			'phones' => array( array(
-				'label' => "Escritório",
-				'phone' => $dados['phones']['0']['phone'],
-				'lastUsage' => "2019-05-16T20:00:00Z")));*/
+			$array = array(
+				'firstName' => $firstName['0'],
+				'name' => $dados['dataForm']['2']['value'],
+				'email' => $dados['dataForm']['5']['value'],
+				'company' => $dados['dataForm']['3']['value'],
+				'phones' => array( array(
+					'label' => "Escritório",
+					'phone' => "+55".$phone,
+					'lastUsage' => "2019-05-16T20:00:00Z")));
 
-		$salvar = array(
- 			'nome' => $array['name'],
- 			'email' => $array['email'],
- 			'empresa' => $array['company'],
- 			'telefone' => $array['phones'][0]['phone']);
+			/*$array = array(
+				'firstName' => $dados['firstName'],
+				'name' => $dados['name'],
+				'email' => $dados['email'],
+				'company' => $dados['company'],
+				'phones' => array( array(
+					'label' => "Escritório",
+					'phone' => $dados['phones']['0']['phone'],
+					'lastUsage' => "2019-05-16T20:00:00Z")));*/
 
- 		$this->Meetime_models->salvar_lead($salvar);
+			$salvar = array(
+	 			'nome' => $array['name'],
+	 			'email' => $array['email'],
+	 			'empresa' => $array['company'],
+	 			'telefone' => $array['phones'][0]['phone']);
 
-		$meetime = json_encode($array);
- 		$enviar = meetime_lead($meetime);
- 		$mensagem = array(
-			'channel' => "#hub-marketing",
-			'text' => "Novo Lead da Pagina Team - Inceitvo. ID do meetime: ".$enviar['id'],
-			'as_user' => "true");
+	 		$this->Meetime_models->salvar_lead($salvar);
 
-		$notas = slack_mensagem($mensagem);
+			$meetime = json_encode($array);
+	 		$enviar = meetime_lead($meetime);
+	 		$mensagem = array(
+				'channel' => "#hub-marketing",
+				'text' => "Novo Lead da Pagina Team - Inceitvo. \n Nome : ".$salvar['nome']."\n Empresa : ".$salvar['empresa'],
+				'as_user' => "true");
 
-		return $enviar;
+			$notas = slack_mensagem($mensagem);
+
+			$mensagem = array(
+				'channel' => "#hub-comercial",
+				'text' => "@canl Novo Lead da Pagina Team - Inceitvo. ID do meetime: ".$enviar['id'],
+				'as_user' => "true");
+
+			$notas = slack_mensagem($mensagem);
+
+			return $enviar;
+		}
+
+		else {
+			$phone = soNumero($dados['dataForm']['4']['value']);
+
+			$person = array(
+				'name' => $dados['dataForm']['2']['value'],
+				'email' => $dados['dataForm']['5']['value'],
+				'owner_id' => 11375206,
+				'phone' => $phone);
+
+			$criar_pessoa = pipedrive_person(json_encode($person));
+
+			$org = array(
+				'name' => $dados['dataForm']['3']['value'],
+				'owner_id' => 11375206);
+
+			$criar_org = pipedrive_org(json_encode($org));
+
+			$deal = array(
+				'title' => 'Inbound - '.$dados['dataForm']['3']['value'],
+				'user_id' => 11375206,
+				'person_id' => $criar_pessoa['data']['id'],
+				'org_id' => $criar_org['data']['id'],
+				'stage_id' => 1);
+
+			$criar_deal = pipedrive_deal(json_encode($deal));
+
+			$mensagem = array(
+				'channel' => "#impulso-agile",
+				'text' => "@mira @celso @Emiliano Novo Lead da Pagina ".$dados['dataForm']['0']['value']."  \n Nome : ".$person['name']."\n Empresa : ".$org['name'],
+				'as_user' => "true");
+
+			$notas = slack_mensagem($mensagem);
+
+			return $criar_deal;
+		}
 	}
 
 	public function pipedrive_post()
