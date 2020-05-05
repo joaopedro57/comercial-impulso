@@ -69,7 +69,7 @@ class Api_controller extends REST_Controller {
 
 			$mensagem = array(
 				'channel' => "#hub-comercial",
-				'text' => "@comercial  Novo Lead da Pagina Team - Inceitvo. ID do meetime: ".$enviar['id'],
+				'text' => "@comercial  Novo Lead da Pagina Team - Inceitvo. Link do meetime: https://meetime.com.br/dashboard/prospector/leads/".$enviar['id'],
 				'as_user' => "false",
 				'link_names' => "true",
 				'username' => "API Comercial");
