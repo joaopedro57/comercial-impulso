@@ -93,3 +93,25 @@ function pipedrive_note( $data ){
 
 	return json_decode( $output, true );
 }
+function slack_mensagem($dados)
+{
+	$url = "https://slack.com/api/chat.postMessage?token=xoxp-261732318791-899597451744-1108889184273-f5484c28db117fe2221e1f490a1e9b30";
+
+	$ch = curl_init();
+	curl_setopt($ch, CURLOPT_URL, $url);
+	curl_setopt($ch, CURLOPT_RETURNTRANSFER, TRUE);
+	curl_setopt($ch, CURLOPT_POST, 1);
+	curl_setopt($ch, CURLOPT_CUSTOMREQUEST, "POST");
+	curl_setopt($ch, CURLOPT_CONNECTTIMEOUT ,0);
+	curl_setopt($ch, CURLOPT_TIMEOUT, 900);
+	curl_setopt($ch, CURLOPT_POSTFIELDS, http_build_query($dados));
+	curl_setopt($ch, CURLOPT_HTTPHEADER, array("Content-Type: application/x-www-form-urlencoded"));
+
+	$output = curl_exec($ch);
+	$info = curl_getinfo($ch);
+	$httpcode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+	curl_close($ch);
+
+	return json_decode( $output, true );
+
+}

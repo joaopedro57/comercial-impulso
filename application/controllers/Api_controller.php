@@ -25,7 +25,7 @@ class Api_controller extends REST_Controller {
 	{
 		$dados = $this->post();
 
-		$firstName = explode(" ", $dados['dataForm']['2']['value']);
+		/*$firstName = explode(" ", $dados['dataForm']['2']['value']);
 		$phone = soNumero($dados['dataForm']['4']['value']);
 
 		$array = array(
@@ -36,9 +36,9 @@ class Api_controller extends REST_Controller {
 			'phones' => array( array(
 				'label' => "Escritório",
 				'phone' => "+55".$phone,
-				'lastUsage' => "2019-05-16T20:00:00Z")));
+				'lastUsage' => "2019-05-16T20:00:00Z")));*/
 
-		/*$array = array(
+		$array = array(
 			'firstName' => $dados['firstName'],
 			'name' => $dados['name'],
 			'email' => $dados['email'],
@@ -46,18 +46,24 @@ class Api_controller extends REST_Controller {
 			'phones' => array( array(
 				'label' => "Escritório",
 				'phone' => $dados['phones']['0']['phone'],
-				'lastUsage' => "2019-05-16T20:00:00Z"))); */
+				'lastUsage' => "2019-05-16T20:00:00Z")));
 
-		$meetime = json_encode($array);
- 		$enviar = meetime_lead($meetime);
- 		$salvar = array(
+		$salvar = array(
  			'nome' => $array['name'],
  			'email' => $array['email'],
  			'empresa' => $array['company'],
- 			'telefone' => $array['phones'][0]['phone'],
- 			'id_meetime' => $enviar['id']);
+ 			'telefone' => $array['phones'][0]['phone']);
 
  		$this->Meetime_models->salvar_lead($salvar);
+
+		$meetime = json_encode($array);
+ 		$enviar = meetime_lead($meetime);
+ 		$mensagem = array(
+			'channel' => "#hub-marketing",
+			'text' => "Novo Lead da Pagina Team - Inceitvo. ID do meetime: ".$enviar['id'],
+			'as_user' => "true");
+
+		$notas = slack_mensagem($mensagem);
 
 		return $enviar;
 	}
@@ -120,5 +126,19 @@ class Api_controller extends REST_Controller {
 		$criar_nota = pipedrive_note(json_encode($nota));
 
 		return $criar_deal;
+	}
+
+	public function slack_post()
+	{
+		//$dados = $this->post();
+
+		$mensagem = array(
+			'channel' => "#com-relacionamento",
+			'text' => "Teste API",
+			'as_user' => "true");
+
+		$notas = slack_mensagem($mensagem);
+
+		print_r($notas);exit;
 	}
 }
