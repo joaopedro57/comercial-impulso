@@ -25,7 +25,7 @@ class Api_controller extends REST_Controller {
 	{
 		$dados = $this->post();
 
-		/*$firstName = explode(" ", $dados['dataForm']['2']['value']);
+		$firstName = explode(" ", $dados['dataForm']['2']['value']);
 		$phone = soNumero($dados['dataForm']['4']['value']);
 
 		$array = array(
@@ -36,9 +36,9 @@ class Api_controller extends REST_Controller {
 			'phones' => array( array(
 				'label' => "Escritório",
 				'phone' => "+55".$phone,
-				'lastUsage' => "2019-05-16T20:00:00Z")));*/
+				'lastUsage' => "2019-05-16T20:00:00Z")));
 
-		$array = array(
+		/*$array = array(
 			'firstName' => $dados['firstName'],
 			'name' => $dados['name'],
 			'email' => $dados['email'],
@@ -46,7 +46,7 @@ class Api_controller extends REST_Controller {
 			'phones' => array( array(
 				'label' => "Escritório",
 				'phone' => $dados['phones']['0']['phone'],
-				'lastUsage' => "2019-05-16T20:00:00Z")));
+				'lastUsage' => "2019-05-16T20:00:00Z")));*/
 
 		$salvar = array(
  			'nome' => $array['name'],
