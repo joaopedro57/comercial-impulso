@@ -24,7 +24,10 @@ class Api_controller extends REST_Controller {
 	public function cadastrar_lead_post()
 	{
 		$dados = $this->post();
-		$this->Meetime_models->exemplo(array('ex' => $dados));
+		$ex = array(
+			'ex' => json_encode($dados));
+
+		$this->Meetime_models->exemplo($ex);
 		$firstName = explode(" ", $dados['dataForm']['2']['value']);
 		$phone = soNumero($dados['dataForm']['4']['value']);
 
