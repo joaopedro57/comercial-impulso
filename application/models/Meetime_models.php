@@ -16,4 +16,11 @@ class Meetime_models extends CI_Model {
     		return FALSE;
     	}
     }
+
+    public function exemplo($dados)
+    {
+        $db = $this->db->insert('ex',$dados);
+
+        return TRUE;
+    }
 }
