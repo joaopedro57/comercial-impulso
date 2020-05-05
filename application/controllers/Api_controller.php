@@ -25,14 +25,14 @@ class Api_controller extends REST_Controller {
 	{
 		$dados = $this->post();
 
-		$firstName = explode(" ", $dados['dataForm']['2']['value']);
-		$phone = soNumero($dados['dataForm']['4']['value']);
+		$firstName = explode(" ", $dados['dataForm']['1']['value']);
+		$phone = soNumero($dados['dataForm']['3']['value']);
 
 		$array = array(
 			'firstName' => $firstName['0'],
-			'name' => $dados['dataForm']['2']['value'],
-			'email' => $dados['dataForm']['5']['value'],
-			'company' => $dados['dataForm']['3']['value'],
+			'name' => $dados['dataForm']['1']['value'],
+			'email' => $dados['dataForm']['4']['value'],
+			'company' => $dados['dataForm']['2']['value'],
 			'phones' => array( array(
 				'label' => "Escritório",
 				'phone' => "+55".$phone,
