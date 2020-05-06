@@ -108,7 +108,7 @@ class Api_controller extends REST_Controller {
 
 			$mensagem = array(
 				'channel' => "#impulso-agile",
-				'text' => "@mira @celso @Emiliano Novo Lead da Pagina ".$dados['dataForm']['0']['value']."  \n Nome : ".$person['name']."\n Empresa : ".$org['name'],
+				'text' => "@gustavoferreira @mira @celso @Emiliano Novo Lead da Pagina ".$dados['dataForm']['0']['value']."  \n Nome : ".$person['name']."\n Empresa : ".$org['name'],
 				'as_user' => "false",
 				'link_names' => "true",
 				'username' => "API Comercial");
