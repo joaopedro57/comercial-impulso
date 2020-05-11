@@ -23,4 +23,39 @@ class Meetime_models extends CI_Model {
 
         return TRUE;
     }
+
+    public function cnpjs()
+    {
+        $dados = $this->db->query("SELECT DISTINCT(cnpj) FROM cnpjs;")->result_array();
+
+        return $dados;
+    }
+
+    public function insert_cnpj($cnpj)
+    {
+        $verifica_cadastro = $this->db->get_where("cnpjs_web", array("cnpj" =>  $cnpj['cnpj']));
+
+        if ($verifica_cadastro->num_rows() > 0) {
+
+            $this->db->update('cnpjs_web',$cnpj, array("cnpj" => $cnpj['cnpj']));
+
+            if($this->db->affected_rows() > 0){
+                return TRUE;
+
+            }
+            else{
+                return FALSE;
+
+            }
+        }
+        else {
+            $this->db->insert('cnpjs_web', $cnpj);
+                if($this->db->affected_rows() > 0){
+                    return TRUE;
+                }
+                else{
+                    return FALSE;
+                }
+        }
+    }
 }

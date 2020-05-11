@@ -178,18 +178,28 @@ class Api_controller extends REST_Controller {
 
 		return $criar_deal;
 	}
-
-	public function slack_post()
+	public function cnpj_post()
 	{
-		//$dados = $this->post();
-
-		$mensagem = array(
-			'channel' => "#com-relacionamento",
-			'text' => "Teste API",
-			'as_user' => "true");
-
-		$notas = slack_mensagem($mensagem);
-
-		print_r($notas);exit;
+		$dados = $this->Meetime_models->cnpjs();
+		foreach ($dados as $value) {
+			$receita = get_info_cnpj($value['cnpj']);
+			if ($receita) {
+				$cnpj = array(
+					'cnpj' => $value['cnpj'],
+					'abertura' => date_format(date_create(str_replace("/", "-", $receita['abertura'])),"Y-m-d"),
+					'nome' => $receita['nome'],
+					'atividade_principal' => $receita['atividade_principal']['text'],
+					'atividade_principal_code' => $receita['atividade_principal']['code'],
+					'atividade_principal_resume' => mercado_ibge($receita['atividade_principal']['code']),
+					'atividade_secundario' => $receita['atividades_secundarias'][0]['text'],
+					'atividade_secundario_code' => $receita['atividades_secundarias'][0]['code'],
+					'atividade_secundario_resume' => mercado_ibge($receita['atividades_secundarias'][0]['code']),
+					'natureza_juridica' => $receita['natureza_juridica'],
+					'capital_social' => $receita['capital_social']
+				);
+				$this->Meetime_models->insert_cnpj($cnpj);
+			}
+			sleep('10');
+		}
 	}
 }

@@ -115,3 +115,92 @@ function slack_mensagem($dados)
 	return json_decode( $output, true );
 
 }
+function get_info_cnpj( $cnpj ) {
+	$url = "http://ws.hubdodesenvolvedor.com.br/v2/cnpj/?cnpj=". $cnpj ."&token=" . TOKEN_HUB_DEV;
+	$ch = curl_init();
+	curl_setopt( $ch, CURLOPT_URL, $url );
+	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+
+	if( ENVIRONMENT != 'production' ){
+		curl_setopt( $ch, CURLOPT_SSL_VERIFYPEER, FALSE );
+	}
+
+	curl_setopt( $ch, CURLOPT_HTTPHEADER, array('Content-Type: application/json') );
+	$output = curl_exec( $ch );
+	$info = curl_getinfo( $ch );
+	curl_close( $ch );
+
+	$data = json_decode( $output, true );
+	if( $data['return'] == 'OK' ){
+		return $data['result'];
+	}else{
+		return FALSE;
+	}
+}
+function mercado_ibge($mercado)
+{
+
+		$code = explode(".", $mercado);
+			
+			if ($code['0'] >= 01 && $code['0'] <= 03 ) {
+				$mercado = "AGRICULTURA, PECUÁRIA, PRODUÇÃO FLORESTAL, PESCA E AQÜICULTURA";
+			}
+			elseif ($code['0'] >= 10 && $code['0'] <= 33) {
+				$mercado = "INDÚSTRIAS DE TRANSFORMAÇÃO";
+			}
+			elseif ($code['0'] == 35) {
+				$mercado = "ELETRICIDADE E GÁS";
+			}
+			elseif ($code['0'] >= 36 && $code['0'] <= 39) {
+				$mercado = "ÁGUA, ESGOTO, ATIVIDADES DE GESTÃO DE RESÍDUOS E DESCONTAMINAÇÃO";
+			}
+			elseif ($code['0'] >= 41 && $code['0'] <= 43) {
+				$mercado = "CONSTRUÇÃO";
+			}
+			elseif ($code['0'] >= 45 && $code['0'] <= 47) {
+				$mercado = "COMÉRCIO; REPARAÇÃO DE VEÍCULOS AUTOMOTORES E MOTOCICLETAS";
+			}
+			elseif ($code['0'] >= 49 && $code['0'] <= 53) {
+				$mercado = "TRANSPORTE, ARMAZENAGEM E CORREIO";
+			}
+			elseif ($code['0'] >= 55 && $code['0'] <= 56) {
+				$mercado = "ALOJAMENTO E ALIMENTAÇÃO";
+			}
+			elseif ($code['0'] >= 58 && $code['0'] <= 63) {
+				$mercado = "INFORMAÇÃO E COMUNICAÇÃO";
+			}
+			elseif ($code['0'] >= 64 && $code['0'] <= 66) {
+				$mercado = "ATIVIDADES FINANCEIRAS, DE SEGUROS E SERVIÇOS RELACIONADOS";
+			}
+			elseif ($code['0'] == 68) {
+				$mercado = "ATIVIDADES IMOBILIÁRIAS";
+			}
+			elseif ($code['0'] >= 69 && $code['0'] <= 75) {
+				$mercado = "ATIVIDADES PROFISSIONAIS, CIENTÍFICAS E TÉCNICAS";
+			}
+			elseif ($code['0'] >= 77 && $code['0'] <= 82) {
+				$mercado = "ATIVIDADES ADMINISTRATIVAS E SERVIÇOS COMPLEMENTARES";
+			}
+			elseif ($code['0'] == 84) {
+				$mercado = "ADMINISTRAÇÃO PÚBLICA, DEFESA E SEGURIDADE SOCIAL";
+			}
+			elseif ($code['0'] == 85) {
+				$mercado = "EDUCAÇÃO";
+			}
+			elseif ($code['0'] >= 86 && $code['0'] <= 88) {
+				$mercado = "SAÚDE HUMANA E SERVIÇOS SOCIAIS";
+			}
+			elseif ($code['0'] >= 90 && $code['0'] <= 93) {
+				$mercado = "ARTES, CULTURA, ESPORTE E RECREAÇÃO";
+			}
+			elseif ($code['0'] >= 94 && $code['0'] <= 96) {
+				$mercado = "OUTRAS ATIVIDADES DE SERVIÇOS";
+			}
+			elseif ($code['0'] == 97) {
+				$mercado = "SERVIÇOS DOMÉSTICOS";
+			}
+			elseif ($code['0'] == 99) {
+				$mercado = "ORGANISMOS INTERNACIONAIS E OUTRAS INSTITUIÇÕES EXTRATERRITORIAIS";
+			}
+		return $mercado;
+}
