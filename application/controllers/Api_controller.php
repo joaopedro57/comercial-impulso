@@ -62,7 +62,7 @@ class Api_controller extends REST_Controller {
 	 		$enviar = meetime_lead($meetime);
 	 		$mensagem = array(
 				'channel' => "#hub-marketing",
-				'text' => "Novo Lead da Pagina Team - Inceitvo. \n Nome : ".$salvar['nome']."\n Empresa : ".$salvar['empresa'],
+				'text' => "Novo Lead da Pagina Team - Incentivo. \n Nome : ".$salvar['nome']."\n Empresa : ".$salvar['empresa'],
 				'as_user' => "false",
 				'username' => "API Comercial");
 
@@ -70,7 +70,7 @@ class Api_controller extends REST_Controller {
 
 			$mensagem = array(
 				'channel' => "#hub-comercial",
-				'text' => "@comercial  Novo Lead da Pagina Team - Inceitvo. Link do meetime: https://meetime.com.br/dashboard/prospector/leads/".$enviar['id'],
+				'text' => "@comercial  Novo Lead da Pagina Team - Incentivo. Link do meetime: https://meetime.com.br/dashboard/prospector/leads/".$enviar['id'],
 				'as_user' => "false",
 				'link_names' => "true",
 				'username' => "API Comercial");
@@ -114,7 +114,7 @@ class Api_controller extends REST_Controller {
 				'username' => "API Comercial");
 
 			$notas = slack_mensagem($mensagem);
-
+			print_r($notas);exit;
 			return $criar_deal;
 		}
 	}
