@@ -37,7 +37,7 @@ class Cnpj extends CI_Controller {
 			echo $row.") CNPJ: ".$value['cnpj']." Dados Web: ".$receita_on.", \n";
 			sleep('10');
 			$row++;
-			if ($row > 4) {
+			if ($row > 229) {
 				exit;
 			}
 		}

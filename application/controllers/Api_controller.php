@@ -79,8 +79,8 @@ class Api_controller extends REST_Controller {
 
 			return $enviar;
 		}
+		elseif ($dados['dataForm']['0']['value'] != 'mentoria-lideranca-remota') {
 
-		else {
 			$phone = soNumero($dados['dataForm']['4']['value']);
 
 			$person = array(
