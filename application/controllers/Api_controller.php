@@ -60,17 +60,10 @@ class Api_controller extends REST_Controller {
 
 			$meetime = json_encode($array);
 	 		$enviar = meetime_lead($meetime);
-	 		$mensagem = array(
-				'channel' => "#hub-marketing",
-				'text' => "Novo Lead da Pagina Team - Incentivo. \n Nome : ".$salvar['nome']."\n Empresa : ".$salvar['empresa'],
-				'as_user' => "false",
-				'username' => "API Comercial");
-
-			$notas = slack_mensagem($mensagem);
 
 			$mensagem = array(
-				'channel' => "#hub-comercial",
-				'text' => "@comercial  Novo Lead da Pagina Team - Incentivo. Link do meetime: https://meetime.com.br/dashboard/prospector/leads/".$enviar['id'],
+				'channel' => "#log-conversao-landing-pages",
+				'text' => "Novo Lead da Pagina ".$dados['dataForm']['0']['value']."  \n Nome : ".$salvar['nome']."\n Empresa : ".$salvar['empresa']."\n Email: ".$salvar['email']."\n Telefone: ".$salvar['telefone'],
 				'as_user' => "false",
 				'link_names' => "true",
 				'username' => "API Comercial");
@@ -107,8 +100,8 @@ class Api_controller extends REST_Controller {
 			$criar_deal = pipedrive_deal(json_encode($deal));
 
 			$mensagem = array(
-				'channel' => "#impulso-agile",
-				'text' => "@gustavoferreira @mira @celso @Emiliano  Novo Lead da Pagina ".$dados['dataForm']['0']['value']."  \n Nome : ".$person['name']."\n Empresa : ".$org['name']."\n Email: ".$person['email']."\n Telefone: ".$phone."\n Pipedrive: https://impulso-agile.pipedrive.com/deal/".$criar_deal['data']['id'],
+				'channel' => "#log-conversao-landing-pages",
+				'text' => "Novo Lead da Pagina ".$dados['dataForm']['0']['value']."  \n Nome : ".$person['name']."\n Empresa : ".$org['name']."\n Email: ".$person['email']."\n Telefone: ".$phone.",
 				'as_user' => "false",
 				'link_names' => "true",
 				'username' => "API Comercial");
