@@ -101,7 +101,7 @@ class Api_controller extends REST_Controller {
 
 			$mensagem = array(
 				'channel' => "#log-conversao-landing-pages",
-				'text' => "Novo Lead da Pagina ".$dados['dataForm']['0']['value']."  \n Nome : ".$person['name']."\n Empresa : ".$org['name']."\n Email: ".$person['email']."\n Telefone: ".$phone.",
+				'text' => "Novo Lead da Pagina ".$dados['dataForm']['0']['value']."  \n Nome : ".$person['name']."\n Empresa : ".$org['name']."\n Email: ".$person['email']."\n Telefone: ".$phone ,
 				'as_user' => "false",
 				'link_names' => "true",
 				'username' => "API Comercial");
