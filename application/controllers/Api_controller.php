@@ -25,8 +25,6 @@ class Api_controller extends REST_Controller {
 	{
 		$dados = $this->post();
 
-		if ($dados['dataForm']['0']['value'] == 'team-incentivo') {
-
 			$firstName = explode(" ", $dados['dataForm']['2']['value']);
 			$phone = soNumero($dados['dataForm']['4']['value']);
 
@@ -40,16 +38,6 @@ class Api_controller extends REST_Controller {
 					'phone' => "+55".$phone,
 					'lastUsage' => "2019-05-16T20:00:00Z")));
 
-			/*$array = array(
-				'firstName' => $dados['firstName'],
-				'name' => $dados['name'],
-				'email' => $dados['email'],
-				'company' => $dados['company'],
-				'phones' => array( array(
-					'label' => "Escritório",
-					'phone' => $dados['phones']['0']['phone'],
-					'lastUsage' => "2019-05-16T20:00:00Z")));*/
-
 			$salvar = array(
 	 			'nome' => $array['name'],
 	 			'email' => $array['email'],
@@ -61,55 +49,7 @@ class Api_controller extends REST_Controller {
 			$meetime = json_encode($array);
 	 		$enviar = meetime_lead($meetime);
 
-			$mensagem = array(
-				'channel' => "#log-conversao-landing-pages",
-				'text' => "Novo Lead da Pagina ".$dados['dataForm']['0']['value']."  \n Nome : ".$salvar['nome']."\n Empresa : ".$salvar['empresa']."\n Email: ".$salvar['email']."\n Telefone: ".$salvar['telefone'],
-				'as_user' => "false",
-				'link_names' => "true",
-				'username' => "API Comercial");
-
-			$notas = slack_mensagem($mensagem);
-
 			return $enviar;
-		}
-		elseif ($dados['dataForm']['0']['value'] != 'mentoria-lideranca-remota') {
-
-			$phone = soNumero($dados['dataForm']['4']['value']);
-
-			$person = array(
-				'name' => $dados['dataForm']['2']['value'],
-				'email' => $dados['dataForm']['5']['value'],
-				'owner_id' => 11375206,
-				'phone' => $phone);
-
-			$criar_pessoa = pipedrive_person(json_encode($person));
-
-			$org = array(
-				'name' => $dados['dataForm']['3']['value'],
-				'owner_id' => 11375206);
-
-			$criar_org = pipedrive_org(json_encode($org));
-
-			$deal = array(
-				'title' => 'Inbound - '.$dados['dataForm']['3']['value'],
-				'user_id' => 11375206,
-				'person_id' => $criar_pessoa['data']['id'],
-				'org_id' => $criar_org['data']['id'],
-				'stage_id' => 1);
-
-			$criar_deal = pipedrive_deal(json_encode($deal));
-
-			$mensagem = array(
-				'channel' => "#log-conversao-landing-pages",
-				'text' => "Novo Lead da Pagina ".$dados['dataForm']['0']['value']."  \n Nome : ".$person['name']."\n Empresa : ".$org['name']."\n Email: ".$person['email']."\n Telefone: ".$phone ,
-				'as_user' => "false",
-				'link_names' => "true",
-				'username' => "API Comercial");
-
-			$notas = slack_mensagem($mensagem);
-			print_r($notas);exit;
-			return $criar_deal;
-		}
 	}
 
 	public function pipedrive_post()
