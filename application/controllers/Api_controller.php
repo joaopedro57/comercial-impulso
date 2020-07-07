@@ -88,29 +88,30 @@ class Api_controller extends REST_Controller {
 	{
 		$dados = $this->post();
 
-		$person = array(
+		$firstName = explode(" ", $dados['dataForm']['2']['value']);
+
+		$array = array(
+			'firstName' => $firstName['0'],
 			'name' => $dados['dataForm']['2']['value'],
 			'email' => $dados['dataForm']['3']['value'],
-			'owner_id' => 11375206);
+			'company' => "Página Agile - ".$firstName['0'],
+			'phones' => array( array(
+				'label' => "Escritório",
+				'phone' => "+55",
+				'lastUsage' => "2019-05-16T20:00:00Z")));
 
-		$criar_pessoa = pipedrive_person(json_encode($person));
+		$salvar = array(
+	 		'nome' => $array['name'],
+	 		'email' => $array['email']);
 
-		$deal = array(
-			'title' => 'Pagina Agile - '.$dados['dataForm']['2']['value'],
-			'user_id' => 11375206,
-			'person_id' => $criar_pessoa['data']['id'],
-			'stage_id' => 1);
+	 	$this->Meetime_models->salvar_lead($salvar);
 
-		$criar_deal = pipedrive_deal(json_encode($deal));
+		$meetime = json_encode($array);
+	 	$enviar = meetime_lead($meetime);
 
-		$nota = array(
-			'content' => $dados['dataForm']['4']['value'],
-			'deal_id' => $criar_deal['data']['id']);
-
-		$criar_nota = pipedrive_note(json_encode($nota));
-
-		return $criar_deal;
+		return $enviar;
 	}
+
 	public function cnpj_post()
 	{
 		$dados = $this->Meetime_models->cnpjs();
